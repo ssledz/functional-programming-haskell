@@ -1,6 +1,7 @@
 module Main where
 
 import System.Environment
+import System.IO
 
 main :: IO ()
 main = do
@@ -28,6 +29,7 @@ mkguess :: String -> String -> Int -> IO ()
 mkguess word disp n =
   do
     putStr "Enter your guess: "
+    hFlush stdout
     g <- getLine
     let (guessed, newDisp) = check word disp $ head g
     turn word newDisp $ if guessed then n else n - 1
