@@ -1,3 +1,4 @@
+"Do it Yourself: Lists and Recursion"
 []
 1 : []
 1 : 2 : []
@@ -35,3 +36,10 @@ let {
 }
 
 filter' (<5) [1..10]
+
+"Do it Yourself: Function Composition"
+
+
+
+
+
