@@ -14,8 +14,13 @@ speller [word] = spell word
 speller words =
   let x = last words
       xs = init words
-      ys = foldr (\w acc -> ", " ++ w ++ acc) "" (map spell xs)
-  in (tail (tail ys)) ++ ", and " ++ (spell x)
+      ys = join ", " (map spell xs)
+  in ys ++ ", and " ++ (spell x)
 
 spell :: [Char] -> [Char]
 spell word = (head word):(" is for " ++ word)
+
+join :: [Char] -> [[Char]] -> [Char]
+join delim [] = ""
+join delim (x:[]) = x
+join delim (x:xs) = x ++ delim ++ join delim xs
