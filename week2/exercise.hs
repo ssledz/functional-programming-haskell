@@ -39,7 +39,25 @@ filter' (<5) [1..10]
 
 "Do it Yourself: Function Composition"
 
+-- map f (map g xs) == map (f . g) xs
 
+map (+5) (map (*3) [1..10])
+
+map ((+5) . (*3)) [1..10]
+
+
+revers' = foldl (\acc x -> x:acc) ""
+revers' "Reversing a string"
+
+sum xs = foldr (+) 0 xs
+product xs = foldr (*) 1 xs
+
+
+sum [1..10]
+product [1..10]
+
+revers'' = foldr (\x acc -> acc ++ [x]) ""
+revers' "Reversing a string"
 
 
 
