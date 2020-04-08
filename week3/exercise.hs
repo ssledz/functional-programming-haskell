@@ -59,5 +59,54 @@ product [1..10]
 revers'' = foldr (\x acc -> acc ++ [x]) ""
 revers' "Reversing a string"
 
+"Grow a Tree"
 
+data Tree = Leaf | Node Int Tree Tree deriving Show
+
+Leaf
+
+let l = Node 1 Leaf Leaf
+
+:t l
+
+:set +m
+
+treeDepth tree = case tree of
+  Leaf -> 0
+  Node _ l r -> 1 + max (treeDepth l) (treeDepth r)
+
+treeDepth Leaf
+treeDepth l
+
+treeSum tree = case tree of
+  Leaf -> 0
+  Node x l r -> x + (treeSum l) + (treeSum r)
+
+treeSum Leaf
+treeSum l
+treeSum $ Node 1 (Node 2 Leaf Leaf) (Node 3 Leaf (Node 4 Leaf Leaf))
+
+
+isSortedTree tree minVal maxVal = case tree of
+  Leaf -> True
+  Node x l r -> let ls = isSortedTree l minVal x
+                    rs = isSortedTree r x maxVal
+                in x >= minVal && x <= maxVal && ls && rs
+
+
+isSortedTree Leaf minBound maxBound
+isSortedTree (Node 1 Leaf Leaf) minBound maxBound
+isSortedTree (Node 1 (Node 0 Leaf Leaf) Leaf) minBound maxBound
+isSortedTree (Node 1 (Node 2 Leaf Leaf) Leaf) minBound maxBound
+
+
+addNewMax tree = case tree of
+  Leaf -> Node 0 Leaf Leaf
+  Node x l Leaf -> Node x l (Node (x + 1) Leaf Leaf)
+  Node x l r -> Node x l (addNewMax r)
+
+addNewMax Leaf
+addNewMax $ addNewMax Leaf
+addNewMax $ addNewMax $ addNewMax Leaf
+addNewMax $ addNewMax $ addNewMax $ addNewMax Leaf
 
