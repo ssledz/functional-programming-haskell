@@ -36,4 +36,7 @@ let {
 hello Dog
 hello (Parrot "polly")
 
+:load max.hs
 
+max' []
+max' [1,2,5,1,2]
