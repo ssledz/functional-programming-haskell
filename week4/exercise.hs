@@ -40,3 +40,11 @@ hello (Parrot "polly")
 
 max' []
 max' [1,2,5,1,2]
+
+let inc = (+1)
+
+fmap inc (Just 1)
+fmap inc $ Just 2
+fmap inc Nothing
+
+
