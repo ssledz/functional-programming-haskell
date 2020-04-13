@@ -1,6 +1,8 @@
 module Main (main) where
 
-main = print $ show [p1, p2]
+import ShowParser (parseShow)
+
+main = print $ parseShow (show [p1, p2])
 
 a = Address "School of Haskell" 13 "Aspekt" "Warsaw" "01-101"
 p1 = Person "John" a 1 [Green, Red]

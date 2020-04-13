@@ -1,4 +1,4 @@
-module ShowParser ( parseShow, tag ) where
+module ShowParser ( parseShow) where
 
 import Text.ParserCombinators.Parsec
 import qualified Text.ParserCombinators.Parsec.Token as P
@@ -27,7 +27,15 @@ joinNL = join "\n"
 showParser :: Parser String
 showParser =
   listParser <|>
-  tupleParsr
+  tupleParsr <|>
+  try recordParser <|>
+  adtParser <|>
+  numberParser <|>
+  quatedStringParser <?> "Parse error"
+
+adtParser = do
+  ti <- typeIdentifierParser
+  return $ tag "atd" ti
 
 listParser = do
   ls <- brackets $ commaSep showParser
@@ -37,6 +45,30 @@ tupleParsr = do
   ls <- parens $ commaSep showParser
   return $ tag "tuple" $ unwords $ map (tag "tuple-elt") ls
 
+recordParser = do
+  ti <- typeIdentifierParser
+  ls <- braces $ commaSep kvParser
+  return $ tagAttrs "record" [("name", ti)] (joinNL ls)
+
+kvParser = do
+  k <- identifier
+  symbol "="
+  t <- showParser
+  return $ tagAttrs "elt" [("key", k)] t
+
+typeIdentifierParser = do
+  fst <- oneOf ['A' .. 'Z']
+  rest <- many alphaNum
+  whiteSpace
+  return $ fst:rest
+
+numberParser = do
+  n <- integer
+  return $ show n
+
+quatedStringParser = do
+  s <- stringLiteral
+  return $ "\"" ++ s ++ "\""
 
 lexer           = P.makeTokenParser emptyDef
 parens          = P.parens lexer
