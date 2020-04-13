@@ -13,4 +13,26 @@ quickCheck ((\n -> (\s -> (decipher n (cipher n s) == s))) :: Int -> String -> B
 "t"
 quickCheck ((\n -> (\s -> (betterDecipher n (betterCipher n s) == s))) :: Int -> String -> Bool)
 +++ OK, passed 100 tests.
+
+verboseCheck ((\n -> (\s -> (betterDecipher n (betterCipher n s) == s))) :: Int -> String -> Bool)
+
+Passed:
+0
+""
+
+Passed:
+1
+"\1020791"
+
+Passed:
+2
+""
+
+Passed:
+3
+"u"
+
+Passed:
+-1
+"\ACKy|"
 ```
